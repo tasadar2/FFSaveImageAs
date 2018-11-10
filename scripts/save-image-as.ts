@@ -1,3 +1,5 @@
+const lastDirectoryKey = "lastDirectory";
+
 browser.commands.onCommand.addListener((command) => {
     if (command === "advanced-save-image-as") {
         console.log("test");
@@ -52,12 +54,18 @@ async function storePath(key: string, savePath: string): Promise<void> {
     console.log("saving...");
     await browser.storage.local.set({
         [key]: savePath,
+        [lastDirectoryKey]: savePath,
     });
 }
 
 async function getDefaultPath(key: string): Promise<string> {
-    const pairs = await browser.storage.local.get(key);
-    return pairs[key] as string;
+    const pairs = await browser.storage.local.get([key, lastDirectoryKey]);
+    let path = pairs[key];
+    if (!path) {
+        path = pairs[lastDirectoryKey];
+    }
+
+    return path as string;
 }
 
 function parseStorageKey(uri: Uri): string {
