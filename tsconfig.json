@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "module": "amd",
+        "target": "es2015",
+        "outDir": "build",
+        "outFile": "build/save-image-as.js"
+    },
+    "exclude": [
+        "node_modules",
+    ],
+}

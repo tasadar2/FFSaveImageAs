@@ -1,0 +1,23 @@
+{
+    "name": "transpiria.firefox.save-image-as",
+    "version": "1.0.0",
+    "devDependencies": {
+        "del": "^3.0.0",
+        "gulp": "^4.0.0",
+        "gulp-cli": "^2.0.1",
+        "gulp-spawn": "^0.4.4",
+        "gulp-typescript": "^5.0.0-alpha.3",
+        "tslint": "^5.11.0",
+        "typescript": "^3.1.6",
+        "web-ext": "^2.9.1"
+    },
+    "scripts": {
+        "build": "tsc",
+        "package": "web-ext lint"
+    },
+    "webExt": {
+        "sourceDir": "build",
+        "artifactsDir": "dist"
+    },
+    "private": true
+}
