@@ -16,7 +16,8 @@ workflows:
 
 jobs:
     build:
-        docker: [node]
+        docker:
+            - image: node
         working_directory: ~/src
         steps:
             - checkout
@@ -49,7 +50,8 @@ jobs:
                     - src
 
     package:
-        docker: [node]
+        docker:
+            - image: node
         working_directory: ~/src
         steps:
             - *attach_workspace
