@@ -43,7 +43,7 @@ jobs:
                 command: npm run copy-manifest
             - run:
                 name: Lint extension
-                command: npm npm run lint-extension
+                command: npm run lint-extension
             - persist_to_workspace:
                 root: ~/
                 paths:
