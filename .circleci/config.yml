@@ -1,0 +1,58 @@
+workflows:
+    version: 2
+    build:
+        jobs:
+            - build
+            - package:
+                requires:
+                    - build
+                filters:
+                    branches:
+                        only: master
+
+&attach_workspace = attach_workspace:
+    - attach_workspace:
+        at: ~/
+
+jobs:
+    build:
+        docker: [node]
+        working_directory: ~/src
+        steps:
+            - checkout
+            - restore_cache:
+                keys:
+                    - dependencies-{{ checksum "package-lock.json" }}
+                    - dependencies-
+            - run:
+                name: Install packages
+                command: npm install
+            - save_cache:
+                paths:
+                    - node_modules
+                key: dependencies-{{ checksum "package-lock.json" }}
+            - run:
+                name: Lint typescript
+                command: npm run lint-typescript
+            - run:
+                name: Build typescript
+                command: npm run build-typescript
+            - run:
+                name: Copy manifest
+                command: npm run copy-manifest
+            - run:
+                name: Lint extension
+                command: npm npm run lint-extension
+            - persist_to_workspace:
+                root: ~/
+                paths:
+                    - src
+
+    package:
+        docker: [node]
+        working_directory: ~/src
+        steps:
+            - *attach_workspace
+            - run:
+                name: Package extension
+                command: npm run package-extension
