@@ -2,18 +2,24 @@
     "name": "transpiria.firefox.save-image-as",
     "version": "1.0.0",
     "devDependencies": {
-        "del": "^3.0.0",
-        "gulp": "^4.0.0",
-        "gulp-cli": "^2.0.1",
-        "gulp-spawn": "^0.4.4",
-        "gulp-typescript": "^5.0.0-alpha.3",
         "tslint": "^5.11.0",
         "typescript": "^3.1.6",
         "web-ext": "^2.9.1"
     },
     "scripts": {
-        "build": "tsc",
-        "package": "web-ext lint"
+        "clean": "npm run remove-build && npm run remove-dist",
+        "lint": "npm run lint-typescript",
+        "build": "npm run clean && npm run lint && npm run build-typescript && npm run copy-manifest",
+        "post-build-lint": "npm run build && npm run lint-extension",
+        "package": "npm run post-build-lint && npm run package-extension",
+
+        "remove-build": "node -e \"require('rimraf').sync('build')\"",
+        "remove-dist": "node -e \"require('rimraf').sync('dist')\"",
+        "lint-typescript": "tslint --project .",
+        "build-typescript": "tsc",
+        "copy-manifest": "node -e \"require('fs').copyFileSync('manifest.json', 'build/manifest.json')\"",
+        "lint-extension": "web-ext lint",
+        "package-extension": "web-ext build"
     },
     "webExt": {
         "sourceDir": "build",

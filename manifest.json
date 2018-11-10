@@ -7,6 +7,12 @@
     "version": "1.0",
     "homepage_url": "https://github.com/tasadar2/FFSaveImageAs",
 
+    "applications": {
+        "gecko": {
+            "id": "save-image-as@transpiria.com"
+        }
+    },
+
     "permissions": [
         "activeTab",
         "menus",
@@ -24,8 +30,9 @@
     "commands": {
         "advanced-save-image-as": {
             "suggested_key": {
-                "default": "Ctrl+Alt+I"
+                "default": "Alt+Shift+I"
             }
         }
     }
+
 }
