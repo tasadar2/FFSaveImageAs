@@ -1,0 +1,31 @@
+{
+
+    "description": "Adds a better Save Image As option.",
+    "manifest_version": 2,
+    "author": "Joshua Cherry",
+    "name": "SaveImageAs",
+    "version": "1.0",
+    "homepage_url": "https://github.com/tasadar2/FFSaveImageAs",
+
+    "permissions": [
+        "activeTab",
+        "menus",
+        "downloads",
+        "downloads.open",
+        "storage"
+    ],
+
+    "background": {
+        "scripts": [
+            "save-image-as.js"
+        ]
+    },
+
+    "commands": {
+        "advanced-save-image-as": {
+            "suggested_key": {
+                "default": "Ctrl+Alt+I"
+            }
+        }
+    }
+}
