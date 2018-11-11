@@ -4,12 +4,12 @@
     "manifest_version": 2,
     "author": "Joshua Cherry",
     "name": "Save Image As",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "homepage_url": "https://github.com/tasadar2/FFSaveImageAs",
 
     "applications": {
         "gecko": {
-            "id": "save-image-as@transpiria.com"
+            "id": "{cc19018e-8d71-4999-9f19-5dfb71ee176a}"
         }
     },
 

@@ -88,15 +88,13 @@ function parseStorageKey(uri: Uri): string {
 function parseFilename(address: string): string {
     let filename = address;
     if (address) {
-        let index = address.lastIndexOf("/") + 1;
+        const index = address.lastIndexOf("/") + 1;
         if (index > -1 && address.length > index) {
             filename = address.substring(index);
         }
 
-        index = filename.indexOf("?");
-        if (index > -1) {
-            filename = filename.substring(0, index);
-        }
+        const parts = filename.split(/\?\:/);
+        filename = parts[0];
 
         if (filename.startsWith("file")) {
             const tempFilename = parseDownloadToken(address);
