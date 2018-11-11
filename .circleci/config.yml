@@ -16,7 +16,8 @@ workflows:
 
 jobs:
     build:
-        docker: [node]
+        docker:
+            - image: node
         working_directory: ~/src
         steps:
             - checkout
@@ -42,14 +43,15 @@ jobs:
                 command: npm run copy-manifest
             - run:
                 name: Lint extension
-                command: npm npm run lint-extension
+                command: npm run lint-extension
             - persist_to_workspace:
                 root: ~/
                 paths:
                     - src
 
     package:
-        docker: [node]
+        docker:
+            - image: node
         working_directory: ~/src
         steps:
             - *attach_workspace
