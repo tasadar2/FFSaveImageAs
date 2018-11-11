@@ -73,9 +73,11 @@ function parseStorageKey(uri: Uri): string {
     switch (uri.domain) {
         case "hentai-foundry.com":
             segmentLength = 4;
+            break;
         case "twitter.com":
         case "deviantart.com":
             segmentLength = 2;
+            break;
         case "tumblr.com":
         default:
             segmentLength = 1;

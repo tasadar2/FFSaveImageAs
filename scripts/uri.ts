@@ -27,7 +27,7 @@ class Uri {
         domainParts = this.host.split(".");
         let domain = domainParts[domainParts.length - 1];
         if (domainParts.length > 1) {
-            domain = domainParts[domainParts.length - 2] + domain;
+            domain = domainParts[domainParts.length - 2] + "." + domain;
         }
         this.domain = domain;
     }
