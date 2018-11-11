@@ -25,7 +25,9 @@ browser.menus.onClicked.addListener(async (info, tab) => {
         console.log(`defaultPath: ${defaultPath}`);
 
         const downloadId = await browser.downloads.download({
-            conflictAction: FilenameConflictAction.prompt,
+            // overwrite results in the prompt behaviour
+            // prompt is not used because it is documented, but not implemented...
+            conflictAction: FilenameConflictAction.overwrite,
             defaultPath,
             filename,
             filters: [{
