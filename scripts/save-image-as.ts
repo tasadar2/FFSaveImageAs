@@ -25,6 +25,7 @@ browser.menus.onClicked.addListener(async (info, tab) => {
         console.log(`defaultPath: ${defaultPath}`);
 
         const downloadId = await browser.downloads.download({
+            conflictAction: browser.downloads.FilenameConflictAction.prompt,
             defaultPath,
             filename,
             filters: [{

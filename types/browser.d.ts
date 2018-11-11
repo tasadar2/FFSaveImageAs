@@ -116,6 +116,18 @@ declare namespace browser {
 
             /** Filters to show in the file picker. */
             filters?: IAppendFilter[];
+
+            /** A string representing the action you want taken if there is a filename conflict, as defined in the downloads.FilenameConflictAction type (defaults to "uniquify" when it is not specified). */
+            conflictAction?: FilenameConflictAction;
+        }
+
+        enum FilenameConflictAction {
+            /** The browser will modify the filename to make it unique. */
+            uniquify,
+            /** The browser will overwrite the old file with the newly-downloaded file. */
+            overwrite,
+            /** The browser will prompt the user, asking them to choose whether to uniquify or overwrite. */
+            prompt
         }
 
         interface IAppendFilter {
