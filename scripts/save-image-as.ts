@@ -93,7 +93,7 @@ function parseFilename(address: string): string {
             filename = address.substring(index);
         }
 
-        const parts = filename.split(/\?\:/);
+        const parts = filename.split(/\?|\:/);
         filename = parts[0];
 
         if (filename.startsWith("file")) {
