@@ -13,7 +13,7 @@ class Uri {
     private processUrl(url: string): void {
         this.url = url.toLowerCase();
 
-        const protocolParts = this.url.split("//");
+        const protocolParts = this.url.split("://");
         this.protocol = protocolParts[0];
         this.segments = protocolParts[1].split("/");
 

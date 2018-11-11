@@ -18,7 +18,7 @@ browser.menus.onClicked.addListener(async (info, tab) => {
         console.log(`imageUrl: ${info.srcUrl}`);
         const filename = parseFilename(info.srcUrl);
         console.log(`filename: ${filename}`);
-        const pageUri = new Uri(tab.url);
+        const pageUri = cleanUri(new Uri(tab.url));
         const storageKey = parseStorageKey(pageUri);
         console.log(`storageKey: ${storageKey}`);
         const defaultPath = await getDefaultPath(storageKey);
@@ -49,6 +49,16 @@ browser.menus.onClicked.addListener(async (info, tab) => {
         }
     }
 });
+
+function cleanUri(uri: Uri): Uri {
+    if (uri.protocol === "wyciwyg") {
+        let index = uri.url.lastIndexOf("://");
+        index = uri.url.lastIndexOf("/", index);
+        uri = new Uri(uri.url.substr(index + 1));
+    }
+
+    return uri;
+}
 
 async function storePath(key: string, savePath: string): Promise<void> {
     console.log("saving...");
