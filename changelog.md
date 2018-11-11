@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.6] - 2018-11-11
+### Changed
+- Changed download conflict option to prompt. [@tasadar2](https://github.com/tasadar2)
+
 ## [1.0.5] - 2018-11-11
 ### Added
 - Added handling of the wyciwyg protocol. [@tasadar2](https://github.com/tasadar2)
