@@ -4,7 +4,7 @@
     "manifest_version": 2,
     "author": "Joshua Cherry",
     "name": "Save Image As",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "homepage_url": "https://github.com/tasadar2/FFSaveImageAs",
 
     "applications": {

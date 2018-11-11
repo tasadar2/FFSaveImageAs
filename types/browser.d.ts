@@ -121,15 +121,6 @@ declare namespace browser {
             conflictAction?: FilenameConflictAction;
         }
 
-        enum FilenameConflictAction {
-            /** The browser will modify the filename to make it unique. */
-            uniquify,
-            /** The browser will overwrite the old file with the newly-downloaded file. */
-            overwrite,
-            /** The browser will prompt the user, asking them to choose whether to uniquify or overwrite. */
-            prompt
-        }
-
         interface IAppendFilter {
 
             /** The title of the filter. */
