@@ -9,7 +9,7 @@ browser.commands.onCommand.addListener((command) => {
 browser.menus.create({
     contexts: ["image"],
     id: "advanced-save-image-as",
-    title: "&Advanced Save Image As",
+    title: "A&dvanced Save Image As",
 });
 
 browser.menus.onClicked.addListener(async (info, tab) => {
@@ -119,6 +119,7 @@ function parseFilename(address: string): string {
         }
     }
 
+    filename = decodeURI(filename);
     console.log(filename);
     return filename;
 }
