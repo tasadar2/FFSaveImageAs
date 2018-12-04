@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.11] - 2018-12-03
+### Added
+- Added baraag.net and newgrounds.com. [@tasadar2](https://github.com/tasadar2)
+
 ## [1.0.10] - 2018-11-20
 ### Changed
 - Changed helper key to d to avoid collision. [@tasadar2](https://github.com/tasadar2)
