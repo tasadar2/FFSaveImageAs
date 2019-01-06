@@ -22,7 +22,7 @@ node-job: &node-job
     docker:
         - image: node
 
-attach_workspace: &attach_workspace:
+attach_workspace: &attach_workspace
     - attach_workspace:
         at: ~/
 
