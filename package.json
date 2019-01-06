@@ -6,9 +6,9 @@
         "rimraf": "^2.6.3",
         "scriptastic": "^1.0.5",
         "ts-node": "^7.0.1",
-        "tslint": "^5.11.0",
-        "typescript": "^3.1.6",
-        "web-ext": "^2.9.1"
+        "tslint": "^5.12.0",
+        "typescript": "^3.2.2",
+        "web-ext": "^2.9.3"
     },
     "scripts": {
         "clean": "scri clean",
@@ -16,10 +16,5 @@
         "build": "scri build",
         "package": "scri package"
     },
-    "webExt": {
-        "sourceDir": "build",
-        "artifactsDir": "dist"
-    },
-    "private": true,
-    "dependencies": {}
+    "private": true
 }
