@@ -14,10 +14,10 @@ workflows:
                     branches:
                         only: master
 
-&default-job = default-job:
+default-job: &default-job
     working_directory: ~/src
 
-&node-job = node-job:
+node-job: &node-job
     <<: *default-job
     docker:
         - image: node
