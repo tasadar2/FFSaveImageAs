@@ -23,7 +23,7 @@ node-job: &node-job
         - image: node
 
 attach_workspace: &attach_workspace
-    - attach_workspace:
+    attach_workspace:
         at: ~/
 
 jobs:
