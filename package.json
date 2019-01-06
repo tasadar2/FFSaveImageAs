@@ -2,27 +2,19 @@
     "name": "transpiria.firefox.save-image-as",
     "version": "1.0.0",
     "devDependencies": {
-        "tslint": "^5.11.0",
-        "typescript": "^3.1.6",
-        "web-ext": "^2.9.1"
+        "@types/rimraf": "^2.0.2",
+        "rimraf": "^2.6.3",
+        "scriptastic": "^1.0.5",
+        "ts-node": "^7.0.1",
+        "tslint": "^5.12.0",
+        "typescript": "^3.2.2",
+        "web-ext": "^2.9.3"
     },
     "scripts": {
-        "clean": "npm run remove-build && npm run remove-dist",
-        "lint": "npm run lint-typescript",
-        "build": "npm run clean && npm run lint && npm run build-typescript && npm run copy-manifest && npm run lint-extension",
-        "package": "npm run build && npm run package-extension",
-
-        "remove-build": "node -e \"require('rimraf').sync('build')\"",
-        "remove-dist": "node -e \"require('rimraf').sync('dist')\"",
-        "lint-typescript": "tslint --project .",
-        "build-typescript": "tsc",
-        "copy-manifest": "node -e \"require('fs').copyFileSync('manifest.json', 'build/manifest.json')\"",
-        "lint-extension": "web-ext lint",
-        "package-extension": "web-ext build"
-    },
-    "webExt": {
-        "sourceDir": "build",
-        "artifactsDir": "dist"
+        "clean": "scri clean",
+        "lint": "scri lint",
+        "build": "scri build",
+        "package": "scri package"
     },
     "private": true
 }

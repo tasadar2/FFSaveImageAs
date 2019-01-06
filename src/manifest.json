@@ -4,7 +4,7 @@
     "manifest_version": 2,
     "author": "Joshua Cherry",
     "name": "Save Image As",
-    "version": "1.0.11",
+    "version": "1.0.12",
     "homepage_url": "https://github.com/tasadar2/FFSaveImageAs",
 
     "applications": {
@@ -26,6 +26,11 @@
             "save-image-as.js"
         ]
     },
+
+    "content_scripts": [{
+        "matches": ["https://*/*", "http://*/*"],
+        "js": ["get-element.js"]
+    }],
 
     "commands": {
         "advanced-save-image-as": {

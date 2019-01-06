@@ -13,19 +13,36 @@ browser.menus.create({
 });
 
 browser.menus.onClicked.addListener(async (info, tab) => {
-    if (info.menuItemId === "advanced-save-image-as") {
+    if (info.menuItemId === "advanced-save-image-as" && info.srcUrl) {
         console.log(`pageUrl: ${tab.url}`);
         console.log(`imageUrl: ${info.srcUrl}`);
-        const filename = parseFilename(info.srcUrl);
+        let filename = parseFilename(info.srcUrl);
         console.log(`filename: ${filename}`);
         const pageUri = cleanUri(new Uri(tab.url));
-        const storageKey = parseStorageKey(pageUri);
+        const domainOption = domainOptions.find((option) => option.domain === pageUri.domain);
+        const storageKey = parseStorageKey(pageUri, domainOption);
         console.log(`storageKey: ${storageKey}`);
         const defaultPath = await getDefaultPath(storageKey);
         console.log(`defaultPath: ${defaultPath}`);
+        let element: any;
+        if (info.targetElementId) {
+            element = await getElement(tab, info.targetElementId);
+        }
+        if (domainOption) {
+            const replacements: { [key: string]: string } = {
+                filename,
+            };
+            if (element) {
+                for (const key of Object.keys(element)) {
+                    replacements[`element.${key}`] = element[key];
+                }
+            }
+            filename = formatFileName(domainOption, replacements);
+            console.log(`formatted filename: ${filename}`);
+        }
 
         const downloadId = await browser.downloads.download({
-            // overwrite results in the prompt behaviour
+            // overwrite results in the prompt behavior
             // prompt is not used because it is documented, but not implemented...
             conflictAction: FilenameConflictAction.overwrite,
             defaultPath,
@@ -46,12 +63,37 @@ browser.menus.onClicked.addListener(async (info, tab) => {
         if (downloads && downloads.length > 0) {
             const download = downloads[0];
             console.log(`download.filename: ${download.filename}`);
-            const downloadDirectory = Path.directory(download.filename);
-            console.log(`downloadDirectory: ${downloadDirectory}`);
-            await storePath(storageKey, downloadDirectory);
+            if (download.filename) {
+                const downloadDirectory = Path.directory(download.filename);
+                console.log(`downloadDirectory: ${downloadDirectory}`);
+                await storePath(storageKey, downloadDirectory);
+            }
         }
     }
 });
+
+function formatFileName(domainOption: IDomainOptions, replacements: { [key: string]: string }): string {
+    let filename = replacements.filename;
+    if (domainOption.fileFormat) {
+        filename = domainOption.fileFormat;
+        for (const key of Object.keys(replacements)) {
+            filename = filename.replace(`{${key}}`, replacements[key]);
+        }
+
+        if (!Path.extension(filename)) {
+            filename += Path.extension(replacements.filename);
+        }
+    }
+    return filename;
+}
+
+async function getElement(tab: browser.ITab, elementId: number): Promise<any> {
+    if (tab.id) {
+        return await browser.tabs.sendMessage(tab.id, {
+            elementId,
+        });
+    }
+}
 
 function cleanUri(uri: Uri): Uri {
     if (uri.protocol === "wyciwyg") {
@@ -81,22 +123,10 @@ async function getDefaultPath(key: string): Promise<string> {
     return path as string;
 }
 
-function parseStorageKey(uri: Uri): string {
-    let segmentLength;
-    switch (uri.domain) {
-        case "hentai-foundry.com":
-        case "newgrounds.com":
-            segmentLength = 4;
-            break;
-        case "twitter.com":
-        case "deviantart.com":
-        case "baraag.net":
-            segmentLength = 2;
-            break;
-        case "tumblr.com":
-        default:
-            segmentLength = 1;
-            break;
+function parseStorageKey(uri: Uri, domainOption?: IDomainOptions): string {
+    let segmentLength = 1;
+    if (domainOption) {
+        segmentLength = domainOption.storageKeySegmentLength;
     }
 
     return "site_" + Path.combine(...uri.segments.slice(0, segmentLength));
@@ -126,7 +156,7 @@ function parseFilename(address: string): string {
     return filename;
 }
 
-function parseDownloadToken(address: string): string {
+function parseDownloadToken(address: string): string | undefined {
     let filename;
     if (address) {
         let index = address.indexOf("downloadToken=") + 14;

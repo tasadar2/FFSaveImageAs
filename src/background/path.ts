@@ -32,4 +32,17 @@ class Path {
         path = path.replace(/\\/g, "/");
         return path.replace(/\/\//g, "/");
     }
+
+    public static extension(path: string): string {
+        let pathReference = this.sanitize(path);
+        let index = pathReference.lastIndexOf("/");
+        if (index > -1) {
+            pathReference = pathReference.slice(index);
+            index = pathReference.lastIndexOf(".");
+            if (index > -1) {
+                return pathReference.slice(index);
+            }
+        }
+        return "";
+    }
 }
