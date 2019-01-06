@@ -3,12 +3,24 @@ workflows:
     build:
         jobs:
             - build
+            - lint:
+                requires:
+                    - build
             - package:
                 requires:
                     - build
+                    - lint
                 filters:
                     branches:
                         only: master
+
+&default-job = default-job:
+    working_directory: ~/src
+
+&node-job = node-job:
+    <<: *default-job
+    docker:
+        - image: node
 
 &attach_workspace = attach_workspace:
     - attach_workspace:
@@ -16,9 +28,7 @@ workflows:
 
 jobs:
     build:
-        docker:
-            - image: node
-        working_directory: ~/src
+        <<: *node-job
         steps:
             - checkout
             - restore_cache:
@@ -33,28 +43,25 @@ jobs:
                     - node_modules
                 key: dependencies-{{ checksum "package-lock.json" }}
             - run:
-                name: Lint typescript
-                command: npm run lint-typescript
-            - run:
-                name: Build typescript
-                command: npm run build-typescript
-            - run:
-                name: Copy manifest
-                command: npm run copy-manifest
-            - run:
-                name: Lint extension
-                command: npm run lint-extension
+                name: Build
+                command: node_modules/.bin/scri build-only
             - persist_to_workspace:
                 root: ~/
                 paths:
                     - src
 
-    package:
-        docker:
-            - image: node
-        working_directory: ~/src
+    lint:
+        <<: *node-job
         steps:
             - *attach_workspace
             - run:
                 name: Package extension
-                command: npm run package-extension
+                command: node_modules/.bin/scri lint-only
+
+    package:
+        <<: *node-job
+        steps:
+            - *attach_workspace
+            - run:
+                name: Package extension
+                command: node_modules/.bin/scri package-only

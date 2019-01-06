@@ -3,6 +3,16 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.12] - 2019-01-05
+### Added
+- Added support for dynamic filenames base on gleamed information. [@tasadar2](https://github.com/tasadar2)
+- Added selected image element attributes as formatting options. [@tasadar2](https://github.com/tasadar2)
+
+### Techdebt
+- Added preliminary support for user-settable domain based options. [@tasadar2](https://github.com/tasadar2)
+- Reorganized the file structure to accomodate background and content scripts.  [@tasadar2](https://github.com/tasadar2)
+- Switched build orchestrator to scriptastic. [@tasadar2](https://github.com/tasadar2)
+
 ## [1.0.11] - 2018-12-03
 ### Added
 - Added baraag.net and newgrounds.com. [@tasadar2](https://github.com/tasadar2)

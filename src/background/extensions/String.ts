@@ -1,4 +1,4 @@
-String.prototype.trimStart = function (value) {
+String.prototype.trimStart = function (this: string, value: string) {
     let result = this;
     value = value || " ";
     while (result.startsWith(value)) {
@@ -7,7 +7,7 @@ String.prototype.trimStart = function (value) {
     return result;
 };
 
-String.prototype.trimEnd = function (value) {
+String.prototype.trimEnd = function (this: string, value: string) {
     let result = this;
     value = value || " ";
     while (result.endsWith(value)) {

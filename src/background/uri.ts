@@ -3,14 +3,10 @@ class Uri {
     public protocol: string;
     public host: string;
     public domain: string;
-    public port: string;
+    public port?: string;
     public url: string;
 
     constructor(url: string) {
-        this.processUrl(url);
-    }
-
-    private processUrl(url: string): void {
         this.url = url.toLowerCase();
 
         const protocolParts = this.url.split("://");

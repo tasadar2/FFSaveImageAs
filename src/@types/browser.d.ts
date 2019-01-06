@@ -12,11 +12,17 @@ declare namespace browser {
              */
             function addListener(callback: (info: IOnClickData, tab: ITab) => void): void;
 
+            /** Information passed to the menus.onClicked event listener when a menu item is clicked. */
             interface IOnClickData {
+
                 /** The ID of the menu item that was clicked. */
                 menuItemId: number | string;
+
                 /** Will be present for elements with a "src" URL. */
                 srcUrl?: string;
+
+                /** An identifier of the element, if any, over which the context menu was created. Use menus.getTargetElement() in the content script to locate the element. Note that this is not the id attribute of the page element. */
+                targetElementId?: number;
             }
         }
 
@@ -26,6 +32,13 @@ declare namespace browser {
          * @param callback Called when the item has been created. If there were any problems creating the item, details will be available in runtime.lastError.
          */
         function create(createProperties: IContextMenu, callback?: () => void): number | string;
+
+        /**
+         * Returns the element for a given info.targetElementId.
+         * @param targetElementId The property of the menus.OnClickData object passed to the menus.onClicked handler or menus.onShown event.
+         * @returns The element referred to by the targetElementId parameter. If the targetElementId parameter is not valid, the method returns null.
+         */
+        function getTargetElement(targetElementId: number): any;
 
         interface IContextMenu {
 
@@ -197,7 +210,119 @@ declare namespace browser {
 
     interface ITab {
 
+        /** The tab's ID. Tab IDs are unique within a browser session. The tab ID may also be set to tabs.TAB_ID_NONE for browser windows that don't host content tabs (for example, devtools windows). */
+        id?: number;
+
         /** The URL of the document that the tab is displaying. Only present if the extension has the "tabs" permission. */
         url: string;
+    }
+
+    /** Interact with the browser's tab system. */
+    namespace tabs {
+
+        /**
+         * Injects JavaScript code into a page.
+         * @param tabId The ID of the tab in which to run the script. Defaults to the active tab of the current window.
+         * @param details An object describing the script to run.
+         * @returns A Promise that will be fulfilled with an array of objects, representing the result of the script in every injected frame.
+         */
+        function executeScript(tabId: number, details: IExecuteScriptDetails): Promise<any[]>;
+
+        /**
+         * Sends a single message from the extension's background scripts (or other privileged scripts, such as popup scripts or options page scripts) to any content scripts that belong to the extension and are running in the specified tab.
+         *
+         * The message will be received in the content scripts by any listeners to the runtime.onMessage event. Listeners may then optionally send a response back to the background script using the sendResponse argument.
+         *
+         * This is an asynchronous function that returns a Promise.
+         * @param tabId ID of the tab whose content scripts we want to send a message to.
+         * @param message An object that can be serialized to JSON.
+         * @param options
+         */
+        function sendMessage(tabId: number, message: any, options?: ISendMessageOptions): Promise<any>;
+
+        /** An object describing the script to run.  */
+        interface IExecuteScriptDetails {
+            /** If true, the code will be injected into all frames of the current page. If true and frameId is set, then it will raise an error,  frameId and allFrames are mutually exclusive. If it is false, code is only injected into the top frame. Defaults to false. */
+            allFrames?: boolean;
+
+            /** Code to inject, as a text string. Warning: Don’t use this property to interpolate untrusted data into JavaScript, as this could lead to a security issue. */
+            code?: string;
+
+            /** Path to a file containing the code to inject. In Firefox, relative URLs not starting at the extension root are resolved relative to the current page URL. In Chrome, these URLs are resolved relative to the extension's base URL. To work cross-browser, you can specify the path as a relative URL, starting at the extension's root, like this: "/path/to/script.js". */
+            file?: string;
+
+            /** The frame where the code should be injected. Defaults to 0 (the top-level frame). */
+            frameId?: number;
+
+            /** If true, the code will be injected into embedded "about:blank" and "about:srcdoc" frames if your extension has access to their parent document. The code cannot be inserted in top-level about: frames. Defaults to false. */
+            matchAboutBlank?: boolean;
+
+            /** The soonest that the code will be injected into the tab. Defaults to "document_idle". */
+            runAt?: extensionTypes.RunAt;
+        }
+
+        interface ISendMessageOptions {
+
+            /** Sends the message to a specific frame identified by frameId instead of all frames in the tab. Whether the content script is executed in all frames depends on the all_frames setting in the content_scripts section of manifest.json. */
+            frameId?: number;
+        }
+    }
+
+    namespace extensionTypes {
+
+        enum RunAt {
+            /** Corresponds to loading. The DOM is still loading. */
+            "document_start" = "document_start",
+
+            /** Corresponds to interactive. The DOM has finished loading, but resources such as scripts and images may still be loading. */
+            "document_end" = "document_end",
+
+            /** Corresponds to complete. The document and all its resources have finished loading. */
+            "document_idle" = "document_idle",
+        }
+
+    }
+
+    /** This module provides information about your extension and the environment it's running in. */
+    namespace runtime {
+
+        namespace onMessage {
+
+            /**
+             * Adds a listener to this event.
+             * @param callback A listener function that will be called when this event occurs.
+             */
+            function addListener(callback: onMessage);
+        }
+
+        interface onMessage {
+            /**
+             * @param message The message itself. This is a JSON-ifiable object.
+             * @param sender A runtime.MessageSender object representing the sender of the message.
+             * @param sendResponse A function to call, at most once, to send a response to the message. The function takes a single argument, which may be any JSON-ifiable object. This argument is passed back to the message sender.
+             *
+             * If you have more than one onMessage listener in the same document, then only one may send a response.
+             *
+             * To send a response synchronously, call sendResponse before the listener function returns. To send a response asynchronously:
+             * * either keep a reference to the sendResponse argument and return true from the listener function. You will then be able to call sendResponse after the listener function has returned.
+             * * or return a Promise from the listener function and resolve the promise when the response is ready. This is a preferred way.
+             * @returns The listener function can return either a Boolean or a Promise.
+             */
+            (message: any, sender: MessageSender, sendResponse: sendResponse): boolean | Promise<void> | any;
+        }
+
+        /** An object containing information about the sender of a message or connection request; this is passed to the runtime.onMessage() listener. */
+        interface MessageSender {
+
+            /** The ID of the extension that sent the message, if the message was sent by an extension. If the sender set an ID explicitly using the applications key in manifest.json, then id will have this value. Otherwise it will have the ID that was generated for the sender. */
+            id?: string;
+        }
+
+        interface sendResponse {
+            /**
+             * @param response JSON-ifiable object to send back to the message sender.
+             */
+            (response: any): void
+        }
     }
 }

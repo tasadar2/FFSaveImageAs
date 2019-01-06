@@ -2,10 +2,19 @@
     "compilerOptions": {
         "module": "amd",
         "target": "es2015",
-        "outDir": "build",
-        "outFile": "build/save-image-as.js"
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictPropertyInitialization": true,
+        "noImplicitThis": true,
+        "alwaysStrict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noEmitOnError": true,
+        "pretty": true,
+        "skipLibCheck": true,
+        "preserveConstEnums": true,
+        "newLine": "lf",
+        "esModuleInterop": true
     },
-    "exclude": [
-        "node_modules",
-    ],
 }

@@ -27,6 +27,11 @@
         ]
     },
 
+    "content_scripts": [{
+        "matches": ["https://*/*", "http://*/*"],
+        "js": ["get-element.js"]
+    }],
+
     "commands": {
         "advanced-save-image-as": {
             "suggested_key": {
