@@ -3,6 +3,20 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.15] - 2019-02-10
+### Added
+- Added options page. [@tasadar2](https://github.com/tasadar2)
+- Added domains to options page. [@tasadar2](https://github.com/tasadar2)
+- Added export site keys to options page. [@tasadar2](https://github.com/tasadar2)
+
+### Removed
+- Removed static sites. [@tasadar2](https://github.com/tasadar2)
+
+## [1.0.14] - 2019-01-05
+### Added
+- Added filename sanitization. [@tasadar2](https://github.com/tasadar2)
+- Added sta.sh. [@tasadar2](https://github.com/tasadar2)
+
 ## [1.0.12] - 2019-01-05
 ### Added
 - Added support for dynamic filenames base on gleamed information. [@tasadar2](https://github.com/tasadar2)

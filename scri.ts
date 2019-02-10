@@ -31,9 +31,18 @@ scri.task("build:manifest")
         fs.copyFileSync("src/manifest.json", "build/manifest.json");
     });
 
+scri.task("build:options")
+    .does(() => {
+        ph.executeSync("tsc -p src/options/tsconfig.json");
+        fs.copyFileSync("src/options/options.css", "build/options/options.css");
+        fs.copyFileSync("src/options/options.html", "build/options/options.html");
+        fs.copyFileSync("src/options/jquery-3.3.1.min.js", "build/options/jquery-3.3.1.min.js");
+    });
+
 scri.task("build-only")
     .runs("build:background")
     .runs("build:content")
+    .runs("build:options")
     .runs("build:manifest");
 
 scri.task("build")

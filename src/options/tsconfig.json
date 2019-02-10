@@ -2,7 +2,7 @@
     "extends": "../../tsconfig.json",
     "compilerOptions": {
         "module": "amd",
-        "outFile": "../../build/save-image-as.js",
+        "outFile": "../../build/options/options.js",
     },
     "include": [
         ".",
