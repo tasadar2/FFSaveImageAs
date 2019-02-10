@@ -4,7 +4,7 @@
     "manifest_version": 2,
     "author": "Joshua Cherry",
     "name": "Save Image As",
-    "version": "1.0.12",
+    "version": "1.0.15",
     "homepage_url": "https://github.com/tasadar2/FFSaveImageAs",
 
     "applications": {
@@ -38,6 +38,12 @@
                 "default": "Alt+Shift+I"
             }
         }
+    },
+
+    "options_ui": {
+        "page": "options/options.html",
+        "browser_style": true,
+        "chrome_style": true
     }
 
 }

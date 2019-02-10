@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="options.css">
+</head>
+
+<body>
+    <h2>Tester</h2>
+    <div>
+        <label>Url</label>
+        <input id="test-input" type="text" />
+    </div>
+    <div>
+        <label>Key</label>
+        <input id="test-view" type="text" readonly />
+    </div>
+
+    <h2>Domain Options</h2>
+    <div class="pull-right">
+        <button class="add-domain pull-right">Add</button>
+    </div>
+    <table width="100%">
+        <thead>
+            <th>Domain</th>
+            <th>Key Selector</th>
+            <th>File Format</th>
+            <th class="auto-w"></th>
+        </thead>
+        <tbody id="domains">
+        </tbody>
+    </table>
+
+    <div class="pull-right">
+        <button id="import-domains">Import</button>
+        <button id="export-domains">Export</button>
+    </div>
+
+    <h2>Domain Keys</h2>
+    <div class="pull-right">
+        <button id="import-keys">Import</button>
+        <button id="export-keys">Export</button>
+    </div>
+
+    <script src="jquery-3.3.1.min.js"></script>
+    <script src="options.js"></script>
+</body>
+
+</html>

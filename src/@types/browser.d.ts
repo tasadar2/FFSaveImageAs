@@ -173,14 +173,14 @@ declare namespace browser {
              * @param keys A key (string) or keys (an array of strings or an object specifying default values) to identify the item(s) to be retrieved from storage. If you pass an empty string, object or array here, an empty object will be retrieved. If you pass null, or an undefined value, the entire storage contents will be retrieved.
              * @returns A Promise that will be fulfilled with a results object containing every object in keys that was found in the storage area. If the operation failed, the promise will be rejected with an error message.
              */
-            function get(keys: null | string | string[] | { [key: string]: string | {} }): Promise<{ [key: string]: string | {} }>;
+            function get(keys?: string | string[] | { [key: string]: string | any }): Promise<{ [key: string]: string | any }>;
 
             /**
              * Gets the amount of storage space (in bytes) used one or more items being stored in the storage area.
              * @param keys A key (string) or keys (an array of strings) to identify the item(s) whose storage space you want to retrieve. If an empty string or array is passed in, 0 will be returned. If you pass null here, the function will return the space used by the entire storage area.
              * @returns A Promise that will be fulfilled with an integer, bytesUsed, representing the storage space used by the objects that were specified in keys. If the operation failed, the promise will be rejected with an error message.
              */
-            function getBytesInUse(keys: null | string | string[]): Promise<number>;
+            function getBytesInUse(keys?: string | string[]): Promise<number>;
 
             /**
              * Stores one or more items in the storage area. If the item already exists, its value will be updated. When you set a value, the storage.onChanged event will fire.
@@ -191,7 +191,7 @@ declare namespace browser {
              * It's generally not possible to store other types, such as Function, Date, RegExp, Set, Map, ArrayBuffer and so on. Some of these unsupported types will restore as an empty object, and some cause set() to throw an error. The exact behavior here is browser-specific.
              * @returns A Promise that will be fulfilled with no arguments if the operation succeeded. If the operation failed, the promise will be rejected with an error message.
              */
-            function set(keys: { [key: string]: string | {} }): Promise<void>;
+            function set(keys: { [key: string]: string | any }): Promise<void>;
 
             /**
              * Removes one or more items from the storage area.

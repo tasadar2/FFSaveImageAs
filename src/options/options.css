@@ -1,0 +1,29 @@
+th {
+    text-align: left;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+th,
+td {
+    border-bottom: 1px solid #ddd;
+    padding: .25em;
+    /* padding-bottom: .25em; */
+}
+
+th.auto-w {
+    width: 0.1%;
+    white-space: nowrap;
+}
+
+.pull-right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.w-100 {
+    width: 100%;
+    padding: inherit;
+}

@@ -19,7 +19,7 @@ browser.menus.onClicked.addListener(async (info, tab) => {
         let filename = parseFilename(info.srcUrl);
         console.log(`filename: ${filename}`);
         const pageUri = cleanUri(new Uri(tab.url));
-        const domainOption = domainOptions.find((option) => option.domain === pageUri.domain);
+        const domainOption = await getDomainOption(getDomainKey(pageUri.domain));
         const storageKey = parseStorageKey(pageUri, domainOption);
         console.log(`storageKey: ${storageKey}`);
         const defaultPath = await getDefaultPath(storageKey);
@@ -40,6 +40,8 @@ browser.menus.onClicked.addListener(async (info, tab) => {
             filename = formatFileName(domainOption, replacements);
             console.log(`formatted filename: ${filename}`);
         }
+        filename = sanitizeFilename(filename);
+        console.log(`sanitized filename: ${filename}`);
 
         const downloadId = await browser.downloads.download({
             // overwrite results in the prompt behavior
@@ -72,6 +74,14 @@ browser.menus.onClicked.addListener(async (info, tab) => {
     }
 });
 
+async function getDomainOption(domainKey: string): Promise<IDomainOptions | undefined> {
+    const pairs = await browser.storage.local.get(domainKey);
+    const domainOption = pairs[domainKey] as IDomainOptions;
+    if (domainOption) {
+        return domainOption;
+    }
+}
+
 function formatFileName(domainOption: IDomainOptions, replacements: { [key: string]: string }): string {
     let filename = replacements.filename;
     if (domainOption.fileFormat) {
@@ -103,6 +113,10 @@ function cleanUri(uri: Uri): Uri {
     }
 
     return uri;
+}
+
+function sanitizeFilename(filename: string): string {
+    return filename.replace(/[\\/:*?"<>|]/g, "-");
 }
 
 async function storePath(key: string, savePath: string): Promise<void> {
