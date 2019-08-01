@@ -141,6 +141,32 @@ async function exportDomainKeys() {
     }
 }
 
+function importDomainKeysOpen() {
+    $("#import-keys-input").trigger("click");
+}
+
+async function importDomainKeys(input: HTMLInputElement) {
+    let file!: File;
+    if (input && input.files != null) {
+        file = input.files[0];
+    }
+    if (file) {
+        const reader = new FileReader();
+        await new Promise((resolve, reject) => {
+            reader.onload = () => {
+                resolve();
+            };
+            reader.onerror = (e) => {
+                reject(e);
+            };
+            reader.readAsText(file);
+        });
+        const content = reader.result as string;
+        const keys = JSON.parse(content);
+        await browser.storage.local.set(keys);
+    }
+}
+
 $(window).ready(async () => {
     $(document).on("click", ".add-domain", () => {
         addDomainOption();
@@ -159,6 +185,14 @@ $(window).ready(async () => {
     $(document).on("click", ".remove-domain", async (element) => {
         const domainOptionElement = $(element.target).closest(".domain-option");
         await removeDomainOption(domainOptionElement);
+    });
+
+    $("#import-keys").on("click", () => {
+        importDomainKeysOpen();
+    });
+
+    $("#import-keys-input").on("change", async (e) => {
+        await importDomainKeys(e.target as HTMLInputElement);
     });
 
     $("#export-keys").on("click", async () => {
