@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.16] - 2019-08-01
+### Added
+- Added import keys option. [@tasadar2](https://github.com/tasadar2)
+
 ## [1.0.15] - 2019-02-10
 ### Added
 - Added options page. [@tasadar2](https://github.com/tasadar2)
