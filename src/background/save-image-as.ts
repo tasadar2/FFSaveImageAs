@@ -116,7 +116,12 @@ function cleanUri(uri: Uri): Uri {
 }
 
 function sanitizeFilename(filename: string): string {
-    return filename.replace(/[\\/:*?"<>|]/g, "-");
+    filename = filename.replace(/[\\/:*?"<>|]/g, "-");
+    const illegalBeginning = /^[ \.]/;
+    while (illegalBeginning.test(filename)) {
+        filename = filename.replace(illegalBeginning, "");
+    }
+    return filename;
 }
 
 async function storePath(key: string, savePath: string): Promise<void> {
