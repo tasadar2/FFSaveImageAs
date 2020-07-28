@@ -36,7 +36,7 @@ scri.task("build:options")
         ph.executeSync("tsc -p src/options/tsconfig.json");
         fs.copyFileSync("src/options/options.css", "build/options/options.css");
         fs.copyFileSync("src/options/options.html", "build/options/options.html");
-        fs.copyFileSync("src/options/jquery-3.3.1.min.js", "build/options/jquery-3.3.1.min.js");
+        fs.copyFileSync("src/options/jquery-3.5.1.slim.min.js", "build/options/jquery-3.5.1.slim.min.js");
     });
 
 scri.task("build-only")
@@ -51,7 +51,7 @@ scri.task("build")
 
 scri.task("lint:typescript")
     .does(() => {
-        ph.executeSync("tslint --project .");
+        ph.executeSync("eslint src/**/*.ts");
     });
 
 scri.task("lint:extension")

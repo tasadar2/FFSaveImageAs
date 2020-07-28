@@ -77,7 +77,7 @@ function nullableValue(value: string): string | undefined {
     return value || undefined;
 }
 
-function nullableView<T>(value: T): string {
+function nullableView(value: string | undefined): string {
     if (value) {
         return value.toString();
     }
