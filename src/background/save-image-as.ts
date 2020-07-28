@@ -49,9 +49,6 @@ browser.menus.onClicked.addListener(async (info, tab) => {
             conflictAction: FilenameConflictAction.overwrite,
             defaultPath,
             filename,
-            filters: [{
-                predefinedFilter: nsIFilePicker.filterImages,
-            }],
             saveAs: true,
             url: info.srcUrl,
         });
@@ -117,7 +114,7 @@ function cleanUri(uri: Uri): Uri {
 
 function sanitizeFilename(filename: string): string {
     filename = filename.replace(/[\\/:*?"<>|]/g, "-");
-    const illegalBeginning = /^[ \.]/;
+    const illegalBeginning = /^[ .]/;
     while (illegalBeginning.test(filename)) {
         filename = filename.replace(illegalBeginning, "");
     }
@@ -159,7 +156,7 @@ function parseFilename(address: string): string {
             filename = address.substring(index);
         }
 
-        const parts = filename.split(/\?|\:/);
+        const parts = filename.split(/[?:]/);
         filename = parts[0];
 
         if (filename.startsWith("file")) {

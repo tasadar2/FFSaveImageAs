@@ -127,23 +127,8 @@ declare namespace browser {
             /** Default path to use in file picker. If the path does not exist, the default downloads directory will be used. */
             defaultPath?: string;
 
-            /** Filters to show in the file picker. */
-            filters?: IAppendFilter[];
-
             /** A string representing the action you want taken if there is a filename conflict, as defined in the downloads.FilenameConflictAction type (defaults to "uniquify" when it is not specified). */
             conflictAction?: FilenameConflictAction;
-        }
-
-        interface IAppendFilter {
-
-            /** The title of the filter. */
-            title?: string;
-
-            /** The filter string. Multiple extensions may be included, separated by a semicolon and a space. */
-            filter?: string;
-
-            /** nsIFilePicker value. */
-            predefinedFilter?: number;
         }
 
         interface IDownloadItem {
@@ -322,7 +307,7 @@ declare namespace browser {
             /**
              * @param response JSON-ifiable object to send back to the message sender.
              */
-            (response: any): void
+            (response: any): void;
         }
     }
 }

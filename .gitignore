@@ -75,6 +75,9 @@ typings/
 # FuseBox cache
 .fusebox/
 
+# JetBrains
+.idea
+
 # Build directories
 build/
 dist/
