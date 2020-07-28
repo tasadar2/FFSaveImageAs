@@ -30,13 +30,13 @@ function addDomainOption() {
     editDomainOptionUI(element, domainOption);
 }
 
-function addDomainOptionUI(index: number): JQuery<HTMLElement> {
+function addDomainOptionUI(index: number): JQuery {
     const newItem = $(`<tr class="domain-option" domain-id="${index}"></tr>`);
     $("#domains").append(newItem);
     return newItem;
 }
 
-function viewDomainOptionUI(element: JQuery<HTMLElement>, domainOption: IDomainOptions) {
+function viewDomainOptionUI(element: JQuery, domainOption: IDomainOptions) {
     element.html(
         `<td class="domain">${domainOption.domain}</td>` +
         `<td class="key">${domainOption.storageKeySegmentLength}</td>` +
@@ -45,14 +45,14 @@ function viewDomainOptionUI(element: JQuery<HTMLElement>, domainOption: IDomainO
     );
 }
 
-function editDomainOption(element: JQuery<HTMLElement>) {
+function editDomainOption(element: JQuery) {
     const domainOption = getDomainOption(element);
     if (domainOption) {
         editDomainOptionUI(element, domainOption);
     }
 }
 
-function editDomainOptionUI(element: JQuery<HTMLElement>, domainOption: IDomainOptions) {
+function editDomainOptionUI(element: JQuery, domainOption: IDomainOptions) {
     element.html(
         `<td class="domain"><div><input class="w-100" type="text" value="${domainOption.domain}" /></div></td>` +
         `<td class="key"><div><input class="w-100" type="text" value="${domainOption.storageKeySegmentLength}" /></div></td>` +
@@ -61,7 +61,7 @@ function editDomainOptionUI(element: JQuery<HTMLElement>, domainOption: IDomainO
     );
 }
 
-async function saveDomainOption(element: JQuery<HTMLElement>) {
+async function saveDomainOption(element: JQuery) {
     const domainOption = getDomainOption(element);
     if (domainOption) {
         await browser.storage.local.remove(getDomainKey(domainOption.domain));
@@ -77,7 +77,7 @@ function nullableValue(value: string): string | undefined {
     return value || undefined;
 }
 
-function nullableView<T>(value: T): string {
+function nullableView(value: string | undefined): string {
     if (value) {
         return value.toString();
     }
@@ -96,7 +96,7 @@ async function saveOptions() {
     await browser.storage.local.set(pairs);
 }
 
-async function removeDomainOption(element: JQuery<HTMLElement>) {
+async function removeDomainOption(element: JQuery) {
     const domainId = element.attr("domain-id");
     if (domainId) {
         const index = Number.parseInt(domainId, 10);
@@ -108,7 +108,7 @@ async function removeDomainOption(element: JQuery<HTMLElement>) {
     }
 }
 
-function getDomainOption(element: JQuery<HTMLElement>): IDomainOptions | undefined {
+function getDomainOption(element: JQuery): IDomainOptions | undefined {
     const domainId = element.attr("domain-id");
     if (domainId) {
         const index = Number.parseInt(domainId, 10);
@@ -167,7 +167,7 @@ async function importDomainKeys(input: HTMLInputElement) {
     }
 }
 
-$(window).ready(async () => {
+$(async () => {
     $(document).on("click", ".add-domain", () => {
         addDomainOption();
     });
