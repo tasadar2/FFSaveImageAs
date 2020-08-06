@@ -1,5 +1,6 @@
 class Uri {
     public segments: string[];
+    public query?: string;
     public protocol: string;
     public host: string;
     public domain: string;
@@ -11,7 +12,11 @@ class Uri {
 
         const protocolParts = this.url.split("://");
         this.protocol = protocolParts[0];
-        this.segments = protocolParts[1].split("/");
+        const queryParts = protocolParts[1].split("?", 2);
+        this.segments = queryParts[0].split("/");
+        if (queryParts.length > 1) {
+            this.query = queryParts[1];
+        }
 
         let domainParts = this.segments[0].split(":");
         if (domainParts.length > 1) {
