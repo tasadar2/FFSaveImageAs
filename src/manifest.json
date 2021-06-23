@@ -4,7 +4,7 @@
     "manifest_version": 2,
     "author": "Joshua Cherry",
     "name": "Save Image As",
-    "version": "1.0.20",
+    "version": "1.0.21",
     "homepage_url": "https://github.com/tasadar2/FFSaveImageAs",
 
     "applications": {
@@ -18,7 +18,8 @@
         "menus",
         "downloads",
         "downloads.open",
-        "storage"
+        "storage",
+        "unlimitedStorage"
     ],
 
     "background": {
