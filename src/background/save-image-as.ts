@@ -9,7 +9,7 @@ browser.commands.onCommand.addListener((command) => {
 browser.menus.create({
     contexts: ["image"],
     id: "advanced-save-image-as",
-    title: "A&dvanced Save Image As",
+    title: "Advanced Save I&mage As",
 });
 
 browser.menus.onClicked.addListener(async (info, tab) => {

@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.21] - 2021-06-23
+### Changed
+- Changed shortcut key to avoid new conflict. [@tasadar2](https://github.com/tasadar2)
+
 ## [1.0.20] - 2020-08-05
 ### Changed
 - The querystring is filtered out of the storage key. [@tasadar2](https://github.com/tasadar2)
